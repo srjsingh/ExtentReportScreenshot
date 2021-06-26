@@ -28,7 +28,7 @@ public class YatraTest {
 	
 	public WebDriver driver;
 	public ExtentReports extent;
-	public ExtentTest logger;
+	public ExtentTest extentTest;
 	
 	
 	@BeforeTest
@@ -89,7 +89,7 @@ public class YatraTest {
 	@Test
 	public void yatraTitleTest() {
 		
-		logger = extent.startTest("yatraTitleTest");
+		extentTest = extent.startTest("yatraTitleTest");
 		
 		String title = driver.getTitle();
 		
@@ -105,27 +105,27 @@ public class YatraTest {
 		
 		if (result.getStatus() == ITestResult.FAILURE) {
 			
-			logger.log(LogStatus.FAIL, "Test Case Failed is: " + result.getName()); // this step will add test case name in extent report
-			logger.log(LogStatus.FAIL, "Test Case Failes is: " + result.getThrowable()); // this step will add error in extent report
+			extentTest.log(LogStatus.FAIL, "Test Case Failed is: " + result.getName()); // this step will add test case name in extent report
+			extentTest.log(LogStatus.FAIL, "Test Case Failes is: " + result.getThrowable()); // this step will add error in extent report
 			
 			String screenshotPath = YatraTest.getScreenshot(driver, result.getName());
-			logger.log(LogStatus.FAIL, logger.addScreenCapture(screenshotPath)); // this step will add screenshot in extent report
+			extentTest.log(LogStatus.FAIL, extentTest.addScreenCapture(screenshotPath)); // this step will add screenshot in extent report
 			
 			// can add execution video also using logger.addScreencast(screenshotPath);
 			
 		}
 		else if (result.getStatus() == ITestResult.SKIP) {
 			
-			logger.log(LogStatus.SKIP, "Test Case Skipped is: " + result.getName());
+			extentTest.log(LogStatus.SKIP, "Test Case Skipped is: " + result.getName());
 			
 		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
 			
-			logger.log(LogStatus.PASS, "Test Case Passes is: " + result.getName());
+			extentTest.log(LogStatus.PASS, "Test Case Passes is: " + result.getName());
 			
 		}
 		
-		extent.endTest(logger); // end test ends the test and prepare the report
+		extent.endTest(extentTest); // end test ends the test and prepare the report
 		
 		driver.quit();
 		
